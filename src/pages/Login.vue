@@ -3,11 +3,11 @@
     <div class="container">
         <div class="login-header">登   录</div>
         <div class="login-main">
-            <div>用户名:<input type="text" placeholder="请输入用户名"/></div>
-            <div>密 码:<input type="password" placeholder="请输入密码"/></div>
+            <div>用户名:<input type="text" placeholder="请输入用户名" v-model="userInfo.username"/></div>
+            <div>密 码:<input type="password" placeholder="请输入密码" v-model="userInfo.password"/></div>
         </div>
         <div class="login-footer">
-            <button>登录</button>
+            <button @click="login">登录</button>
             <button>撤销</button>
         </div>
     </div>
@@ -15,7 +15,27 @@
 </template>
 
 <script setup>
+import {reactive, ref} from 'vue'
+import {useRouter} from 'vue-router'
+import {useStore} from 'vuex'
+import axios from 'axios'
+import request from '@/utils/request.js'
+const router = useRouter()
+const store = useStore()
 
+const userInfo = reactive({
+    username:"",
+    password:""
+})
+
+const login = ()=>{
+    axios.post('/api/login',userInfo).then(res=>{
+        if(res.data.ActionType){
+            store.commit('GetUserName',userInfo.username)
+            router.push('/mainbox')
+        }
+    })
+}
 </script>
 
 <style lang="scss" scoped>

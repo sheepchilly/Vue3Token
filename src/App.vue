@@ -1,16 +1,15 @@
 <template>
-  <Login />
+  <router-view></router-view>
 </template>
 
 <script setup>
-import Login from './pages/Login.vue';
 
 
 </script>
 
 <style lang="scss">
 *{
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
 }
 
